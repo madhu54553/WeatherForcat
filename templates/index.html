@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Forecast System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Weather Forecast System</h1>
+
+    <form method="POST">
+        <input type="text" name="cities" placeholder="Enter city names (Example: Indore,Bhopal)" required>
+        <br><br>
+        <button type="submit">Check Weather</button>
+    </form>
+
+    <br>
+
+    {% if weather_data %}
+
+    <table border="1" align="center" cellpadding="10">
+        <tr>
+            <th>City</th>
+            <th>Temperature</th>
+            <th>Humidity</th>
+            <th>Weather</th>
+        </tr>
+
+        {% for item in weather_data %}
+        <tr>
+            <td>{{ item.city }}</td>
+            <td>{{ item.temp }} °C</td>
+            <td>{{ item.humidity }} %</td>
+            <td>{{ item.weather }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    {% if same_weather %}
+
+<h2>Same Weather Cities</h2>
+
+<ul>
+{% for weather, cities in same_weather.items() %}
+    {% if cities|length > 1 %}
+    <li>
+        <b>{{ weather }}</b> → {{ cities|join(", ") }}
+    </li>
+    {% endif %}
+</ul>
+{% endfor %}
+{% endif %}
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
